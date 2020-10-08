@@ -1,0 +1,6 @@
+_build
+outofdate
+.ipynb_checkpoints
+.DS_Store
+*.ipynb
+*.xlsx

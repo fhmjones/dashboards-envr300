@@ -1,0 +1,40 @@
+name: dashboards
+channels:
+  - eoas_ubc
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.7.*
+  - pandas
+  - numpy
+  - matplotlib
+  - plotly
+  - jupyter=1.*
+  - jupytext
+  - sphinx=2.4.4
+  - ipython
+  - scipy
+  - git
+  - runjb
+  - ghp-import
+  - click
+  - sphinx=2.4.4
+  - jupyterlab
+  - toml
+  - pyarrow
+  - voila
+  - ipyleaflet
+  - ipywidgets
+  - ipyvolume
+  - ipympl
+  - bqplot
+  - pip
+  - pip:
+    - click_log
+    - click_completion
+    - git+https://github.com/jupyter/jupyter-sphinx.git
+    - git+https://github.com/phaustin/MyST-NB.git@utf8
+    - git+https://github.com/phaustin/jupyter-cache/@utf8
+    - git+https://github.com/phaustin/jupyter-book/@utf8
+    - git+https://github.com/mwouts/jupytext.git
+    - jupyter-book>=0.7.0b
