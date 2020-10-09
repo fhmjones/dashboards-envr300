@@ -1,6 +1,6 @@
 # Dashboards for envr300
 
-Code and data for interactive exploration of concepts and data sets in envr300 "Introduction to Research in Environmental Science".
+Code and data for interactive exploration of concepts and data sets in envr300 [Introduction to Research in Environmental Science](https://www.eoas.ubc.ca/academics/courses/envr300).
 
 For sources and development notes, see comments and documentation in each program's markdown `md` or notebook `ipynb` file.
 
@@ -29,5 +29,5 @@ Not yet a dashboard. Goals so far:
 
 Goals: Demonstrate various contributors to a complete signal. Currently, the procedure involves a sine wave, linear trend and random noise. Each can be enabled or disabled. Length of the sinewave can be adjusted from 1 to 10 cycles.
 
-**Current status**: as of Oct 7th this is the first demo to have been made to within Voila using the `plotly` library's "figure widget" method. It needs the figure plot size to be constrained, and then discussion about what exactly instructors want this dashboard to show.
+**Current status**: as of Oct 7th this is the first demo to have been made to work within Voila using the `plotly` library's "figure widget" method. We need to discuss what exactly instructors want this dashboard to show andwhat we can do to make so students can use it constructively.
 
