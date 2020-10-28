@@ -18,7 +18,7 @@ jupyter:
 
 Source for figuring this out is: 
 * plotly plot at https://www.tutorialspoint.com/plotly/plotly_plotting_inline_with_jupyter_notebook.htm
-* random via https://www.w3schools.com/python/numpy_random.asp. Note that importing `random` from `numpy` seems necessary, in other words probably not part of `np`. 
+* random via https://www.w3schools.com/python/numpy_random.asp. Note that importing `random` from `numpy` seems necessary. 
 * array length using Python length function from https://www.w3schools.com/python/ref_func_len.asp. 
 
 **Note:** this works in Jupyter notebook but not in Voila. Apparently you have to use Plotly figure widgets. It's not good enough to just plot the figure. See https://github.com/voila-dashboards/voila/issues/284.
@@ -26,24 +26,19 @@ Source for figuring this out is:
 The next step is to convert to figure widgets. See "plotlytest02". 
 
 ```python
-from plotly.offline import init_notebook_mode
-init_notebook_mode(connected = True)
-import plotly
-from plotly.offline import iplot, init_notebook_mode
-init_notebook_mode(connected = True)
-
 import plotly
 import plotly.graph_objs as go
+from plotly.offline import init_notebook_mode
+init_notebook_mode(connected = True)
 import numpy as np
 from numpy import random
 import math #needed for definition of pi
-
 import ipywidgets as widgets
 ```
 
 ```python
-#work is done in a function which `widgets.interactive` will call to make it interactive.
-#parameters for this function are set by `widgets.interactive`.
+# Work is done in a function which `widgets.interactive` will call to make it interactive.
+# Parameters for this function are set by `widgets.interactive` (next cell).
 
 def plot_signal(ncycles=1.0, draw_s=True, draw_r=True, draw_t=True):
     xpoints = np.arange(0, math.pi*ncycles*2, 0.05)
@@ -65,6 +60,10 @@ def plot_signal(ncycles=1.0, draw_s=True, draw_r=True, draw_t=True):
 ```
 
 ```python
+# widgets.interactive's first parameter is the function to call (defined above, "plot_signal" in this case), 
+# then remaining parameters are the parameters for that function.
+# All parameters are widgets in this case, but if preferred, any parameter could be fixed. 
+
 noisy_sine = widgets.interactive(
     plot_signal,
     ncycles = widgets.FloatSlider(

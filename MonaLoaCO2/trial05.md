@@ -6,7 +6,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.2'
-      jupytext_version: 1.4.2
+      jupytext_version: 1.7.0-rc0
   kernelspec:
     display_name: Python 3
     language: python
@@ -22,6 +22,9 @@ What moving average window length provides the result with least influence of di
 NOTE - adapt LH's version from [here](https://ubc-dsci.github.io/jupyterdays/sessions/heagy/widgets-and-dashboards.html).
 
 ```python
+# NOTE: THIS IS THE SAME AS VERSION TRIAL04 EXCEPT TIDED UP A BIT SO IT RUNS A GOOD DEMONSTRATION IN VOILA. 
+# In other words, there are no new coding techniques in this version, AND comments and debugging lines are much fewer. 
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -32,7 +35,6 @@ import bqplot.pyplot as bqplt
 # Fetch data from the CSV file. Plot to examin.
 df = pd.read_csv(".\data\co2_mm_mlo.csv", header=70)
 df.columns = ['yr','mth','dec_date','avg','interp','trend','ndays']
-#df.head(30)
 ```
 
 ```python
@@ -41,7 +43,6 @@ s = df['avg']
 
 # I don't know why this has to be done. Something to do with a SettingWithCopy warning.
 avg_cl = s.copy()
-#avg_cl[:5], s[:5]
 ```
 
 ```python
@@ -59,8 +60,7 @@ for x in avg_cl[:]:
     if np.isnan(x):
         avg_cl[n] = (avg_cl[n-1]+avg_cl[n+1])/2
     n += 1
-    
-# avg_cl[0:10]
+
 ```
 
 * Use the slider to set the **moving average window size** in units of samples (one sample per month).
@@ -89,7 +89,7 @@ def smooth(window):
 
     # display with interactive plot
     bqplt.clear()
-    bqplt.figure(title='Raw CO2 (blue), and smoothed (red) with' + str(window) + "-point window.")
+    bqplt.figure(title='Raw CO2 (blue), and smoothed (red) with ' + str(window) + "-point window.")
     bqplt.plot(date, avg_cl, 'b-')
     bqplt.plot(date[first_sm_date_index:], smoothed, 'r-')
     bqplt.show()

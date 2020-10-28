@@ -16,32 +16,29 @@ jupyter:
 ## To see if plotly can be used for plotting in dashboards.
 
 
-Source for figuring this out is: 
+Sources for figuring this out is: 
 * see plotytest01 for first attempts. That worked but didn't work in Voila.
-* This page suggests the solution used below: https://github.com/voila-dashboards/voila/issues/284
-* making this using plotly figurewidget so it runs in Voila was guided by https://plotly.com/python/figurewidget-app/
-* However, that does not re-calculate a time series it uses widgets to fetch different data from a frame. 
-* Recaluating our time series might not be as efficient in this code, but it seems to work. 
-* also, the "Figure" data structure is detailed in https://plotly.com/python/figure-structure/
+* The solution used below is suggested by the page: https://github.com/voila-dashboards/voila/issues/284
+* plotly figurewidget was made to run in Voila using guidelines here: https://plotly.com/python/figurewidget-app/
+* However, that example does not re-calculate a time series. It uses widgets to fetch different data from a frame. I'll try an approach using dataframes later. 
+* Recaluating our time series each time is probably not efficient, but it seems to work.
+* Also, the "Figure" data structure is detailed in https://plotly.com/python/figure-structure/
 * Layout details are at https://plotly.com/python/reference/layout/, and other details via that page's left menu.
 
 ```python
 import plotly
+import plotly.graph_objs as go
 from plotly.offline import iplot, init_notebook_mode
 init_notebook_mode(connected = True)
-
-import plotly
-import plotly.graph_objs as go
 import numpy as np
 from numpy import random
 import math #needed for definition of pi
-
 import ipywidgets as widgets
 ```
 
-First assign the widgets.
-
 ```python
+# This time we start by defining the widget objects
+
 ncycles = widgets.FloatSlider(
     min=1, max=10, step=0.25, value=2.0, description='Num. cycles'
 )
@@ -71,31 +68,36 @@ draw_t = widgets.Checkbox(
     indent=True
 ) 
 
+# Begin to define the layout of the dashboard. The Vbox puts three checkboxes in a column. 
 container1 = widgets.VBox(children=[draw_s, draw_r, draw_t]) 
 ```
 
 ```python
-# Assign an empty figure widget with one trace
-# it seems the trace has to be built first, then built again in the widget handling code. 
+# build the X-axis first, then the three time series: 
 
-#xpoints = np.arange(0, math.pi*ncycles.value*2, 0.05)
 xpoints = np.arange(0, ncycles.value, 0.05)
 N=len(xpoints)         #this may not be the most sophisticated approach 
 ypoints = np.sin(xpoints*2*math.pi)
 randpoints = noiselevel.value * (random.rand(N)-.5)
 trendpoints = 0.4*xpoints + 0.5
 
+# The trace to display is a sum of the three components. 
+# Turn components on or off by multiplying by the binary values returned by check box widgets: "component.value". 
+
 sumpoints = draw_s.value*ypoints + draw_r.value*randpoints + draw_t.value*trendpoints
 
+# The graph (or 'trace') for the figure will be defined as a scatter plot, of type "lines".
 trace1 = go.Scatter(x=xpoints, y=sumpoints, mode="lines")
+
+# Now build the figure and define non-default parameters for this figure
 g = go.FigureWidget(data=[trace1], 
                     layout=go.Layout(title=dict(text='Sinewave + trend + noise')))
 g.layout.width = 700
 g.layout.height = 450
-
-# trendpoints
-
-# print(g)
+g.layout.xaxis.title = 'x axis'
+g.layout.yaxis.title = 'Amplitude'
+g.layout.xaxis.range=[0.,11.]
+g.layout.yaxis.range=[-4.,8.]
 ```
 
 ```python
@@ -110,9 +112,17 @@ def response(change):
 
     sumpoints = draw_s.value*ypoints + draw_r.value*randpoints + draw_t.value*trendpoints
     
+    # I don't really understand "with", but it seems to work. 
+    # This time there is just one trace in the graph with x and y values.
     with g.batch_update():
         g.data[0].x = xpoints
         g.data[0].y = sumpoints
+
+# The next few calls I don't really understand. 
+# Presumably I have to look up what the "observe" method is for "widget" objects. 
+# It seems as if the "observe" method needs two parameters: 1) the function to call and 2) the "names" parameters. 
+# `names="value"` seems to be saying: "pass these parameters with their values into the 'response' function". 
+# Or something like that.
 
 ncycles.observe(response, names="value")
 noiselevel.observe(response, names="value")
@@ -120,24 +130,12 @@ draw_s.observe(response, names="value")
 draw_r.observe(response, names="value")
 draw_t.observe(response, names="value")
 
-g.layout.xaxis.title = 'x axis'
-g.layout.yaxis.title = 'Amplitude'
-g.layout.xaxis.range=[0.,11.]
-g.layout.yaxis.range=[-4.,8.]
 ```
 
 ```python
-# run it
+# Finish building the layout, this time an Hbox for the two sliders. 
 container2 = widgets.HBox([ncycles, noiselevel])
+
+# Finally, run the dashboard. 
 widgets.VBox([container1, container2, g])
-```
-
-## next steps
-* DONE lock the axis so it doesn't auto-fit every time
-* DONE fix figure size.
-* DONE adjust noise amplitude? 
-* others? 
-
-```python
-
 ```

@@ -152,11 +152,11 @@ def plot_fit_co2_data(year_max=2020, slope=1, intercept=300, year_min=1958, pred
 
 ```python
 # Interactive method to attach parameter sliders to the figure and present all. 
-series = "seasonally adjusted"
-year_min_early = 1958
+series = "seasonally adjusted" #fix the choice of data column for now
+year_min_early = 1958          #fix start and end dates for now
 year_max_early = 1963
 
-# "interactive" requires the function & parameters required by that function
+# "interactive" requires the function, followd by the parameters required by that function.
 w_co2_early = widgets.interactive(
     plot_fit_co2_data,
     slope=widgets.FloatSlider(
@@ -189,9 +189,11 @@ w_co2_early
 
 **Question:** If the trend between 2015 and 2020 continues, what would we expect the CO$_2$ concentration to be in January, 2030? 
 
-Use sliders to explore this "recent" end of the data set. 
+Use sliders to explore the "recent" end of the data set. 
 
 ```python
+# Code nearly identical to previous cells, hence no comments here.
+
 series = "seasonally adjusted"
 year_min_recent = 2015
 year_max_recent = 2020
@@ -235,6 +237,8 @@ Now compare the slopes and predicted values on one graph
 * If NOT set "predn_yr" sliders for both models above to 2030 and click "Run Interact" again. 
 
 ```python
+# We want this third figure to be not shown until user asks for it. 
+
 from ipywidgets import interact_manual
 
 def plot_predictions(xlim=None, ylim=None, predn_yr=2030):
@@ -269,7 +273,6 @@ def plot_predictions(xlim=None, ylim=None, predn_yr=2030):
     
     ax.set_xlim(xlim)
     ax.set_ylim(ylim)
-# plot_predictions()
 
 im = interact_manual(
     plot_predictions, 
@@ -277,10 +280,6 @@ im = interact_manual(
     ylim=widgets.fixed(None), 
     predn_yr=widgets.fixed(2030)
 );
-```
-
-```python
-
 ```
 
 ---
