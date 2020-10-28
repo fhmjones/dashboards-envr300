@@ -2,7 +2,12 @@
 
 This repo is accumulating code, data and strategies for interactive exploration of concepts and data sets in envr300 [Introduction to Research in Environmental Science](https://www.eoas.ubc.ca/academics/courses/envr300).
 
-This is also where we are learning to build dashboards using ipywidgets with a plotting library of your choice. We started with `bqplot`, then backed off a bit and used `matplotlib` for the more complete "MondaLoaCO$_2$" dashboard. Then for the "ThreeSignals" dashboard we have tried out use of `plotly`. Pointers to these libraries are given in the respective Jupyter Notebooks.
+This is also where we are learning to build dashboards using ipywidgets with a plotting library of your choice. Here is the sequence of development:
+
+* We started in the folder "**MonaLoaCO2**" with file "trial04" (trial "05" is same but "cleaner") using `bqplot` for plotting.
+* Then we backed off a bit and used `matplotlib` for the more complete "MonaLoaCO2" dashboard in file "co2-ver01".
+* Then we started work in the "**ThreeSignals**" folder using the `plotly` library. The first two versions, "plotytest01" and "plotlytest02" are commented, and the third version "plotlytest03" is cleaned up for demonstration as a Voila Dashboard.
+* Pointers to libraries used are given in the respective Jupyter Notebooks either as markdown cells or within comments next to code.
 
 For development notes and sources, see comments and documentation in each program's markdown `md` or notebook `ipynb` file.
 

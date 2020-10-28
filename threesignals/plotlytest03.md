@@ -16,7 +16,14 @@ jupyter:
 ## Signal components, with smoothing.
 
 ```python
-# This starts with information shown in the dashboard explaining the purpose of the dashboard.
+# Comemnts so they don't show up when run in Voila
+# - See plotlytest01 for first attempts. That worked but didn't work in Voila.
+# - Version plotlytest02 succeeds in the demo without the smoothing option.
+# - This version (plotlytest03) is cleaned up a bit, and adds smoothing. 
+# - However it is stuck using a two-trace plot, so "no smoothing" means the smoothed trace is shown as zero. 
+# - In other words I haven't figured out how to NOT plot one of the traces. 
+
+# This dasboard starts with information shown in the dashboard explaining the purpose of the dashboard.
 ```
 
 ### Purpose
@@ -25,16 +32,6 @@ Demonstrate a synthetic signal consisting of _data + random noise + a linear tre
 ### Instructions
 - Explore the dashboard and its controls. 
 - Note that figure-viewing controls in the figure's top-right corner only appear when your mouse is within the figure. 
-
-### Questions to consider
-These are examples of questions to drive teaching discussions or learning assignments. Questions are not necessarily well-posed. Also, most are judgement calls - which is part of the point!
-1. How much noise does it take to obscure the fact that the signal is a nice sinewave?
-2. "Smoothing" is a simple "boxcar", or 5-point moving average. How much MORE noise can be managed before the smoothed signal begins to loose its useful character?
-3. If there are only 2 or 3 cycles of signal, can you tell there is a trend? What are the implications for the "length" of your data set or series of measurements? 
-4. Does noise obscure the fact that there is a superimposed linear trend? 
-5. How much data (i.e. how long do you have to take measurments) before the trend is observed? 
-6. Does this necessary length for measuring the phenomenon vary if there is more noise? 
-7. Pose your own question AND answer it.  
 
 ```python
 import plotly
@@ -192,19 +189,23 @@ widgets.VBox([container3, g])
 # traces instead of independent time series. 
 ```
 
+### Questions students could consider
+These are examples of questions to drive teaching discussions or learning assignments. Questions are not necessarily well-posed. Also, most are judgement calls - which is part of the point!
+1. How much noise does it take to obscure the fact that the signal is a nice sinewave?
+2. "Smoothing" is a simple "boxcar", or 5-point moving average. How much MORE noise can be managed before the smoothed signal begins to loose its useful character?
+3. If there are only 2 or 3 cycles of signal, can you tell there is a trend? What are the implications for the "length" of your data set or series of measurements? 
+4. Does noise obscure the fact that there is a superimposed linear trend? 
+5. How much data (i.e. how long do you have to take measurments) before the trend is observed? 
+6. Does this necessary length for measuring the phenomenon vary if there is more noise? 
+7. Pose your own question AND answer it.  
+
 ```python
-# Next steps (as comments instead of markdown so they don't appear in Voila)
-#   modify so options are "display data" and "display smoothed" or both. i.e. toggle plots of trace0 and/or trace1. 
-#   A more "Pythonesque" approach would use Pandas dataframes to contain the signal, noise, trend, result and the smoothed version of result, all in a dataframe who's index is x-axis. 
-
-# Sources for figuring this out
-#   See plotlytest01 for first attempts. That worked but didn't work in Voila.
-#   Version plotlytest02 succeeds in the demo without the smoothing option.
-#   This version (plotlytest03) adds smoothing. 
-#   However it is stuck using a two-trace plot, so "no smoothing" means the smoothed trace is shown as zero. 
-#   In other words I haven't figured out how to NOT plota one of the traces. 
+# Next steps are given here as comments instead of markdown so they don't appear in Voila.
+#   1. Change so that options are "display data" and "display smoothed" or both. i.e. toggle plots of trace0 and/or trace1. 
+#   2. A more "Pythonesque" approach would use Pandas dataframes to contain the signal, noise, trend, result and the smoothed version of result, all in a dataframe who's index is x-axis. 
+#
+# Sources for figuring out this implementation:
 #   Getting Plotly to work in Voila is outlined here: https://github.com/voila-dashboards/voila/issues/284
-
 #   Using plotly figurewidget was guided by https://plotly.com/python/figurewidget-app/
 #     However, that page does not re-calculate a time series - it uses widgets to fetch different data from a frame.
 #     In fact, that would probably be a better approach - signal, noise, trend, result and smoothed all in a dataframe who's index is x-axis.
