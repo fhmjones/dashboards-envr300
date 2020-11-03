@@ -33,14 +33,15 @@ Based on the MonaLoa carbon dioxide data since 1958, this dashboard has three pa
 
 ## Vancouver-Ozone
 
-Not yet a dashboard. Goals so far:
+Dashboard version is in file "O3_dashbrd01".  Goals are:
 
-* have students work with "messy" data sets (ozone from sensours in SW British Columbia).
-* explore impact of plotting options on interpreability (eg. dots, lines, both, maybe others)
-* compare ozone measurements at two locations, one near the ocean, and one inland.
-* explore processing necessary to make differences most clearly visible.
+* Have students work with "messy" data sets using ozone from two sensors in SW British Columbia.
+* Compare ozone measurements at two locations, one near the ocean, and one inland.
+* Compare raw, 7-day moving average and daily maximum 8-hr average. Which makes differences - or the thing you want to learn from the data - most clearly visible? 
+* Explore impact of plotting options on interpreability (eg. dots, lines, both, maybe others) (Not yet done.)
 
-**Current status** Plotting using `bqplot` library was explored. This will likely be replaced to use `plotly` library, based on "better" experiences learned with the "threesignals" dashboard.
+**Current status**: plotting with `plotly` library, using "decorator" approach to adding interactive widgets. 
+**Needs doing**: change to call-back rather than decorator approach so the dashboard component organization can be more flexible.
 
 ```python
 

@@ -17,11 +17,8 @@ jupyter:
 ## Tutorial Part 1
 ### Importing modules, importing data, plotting timeseries and scatter plots
 Adapted from [this tutorial](https://drive.google.com/drive/folders/1Tj7pDVd33IKeeKaoKIGzvSiswPft56Tb)
-<!-- #endregion -->
 
-<!-- #region colab_type="text" id="fyF4Y6Zz_6RE" -->
-
-Import the required python modules
+Input data is a modified version of raw because original files are 25-35 MBytes and contain much redundant information. Raw data were adapted to CSV files with only the necessary parts, mainly to (a) speed up input to Python code and (b) avoid the necessary dataframe code that is otherwise needed to extract required data.
 <!-- #endregion -->
 
 ```python colab={} colab_type="code" id="unUVivdPmhNz"
@@ -30,10 +27,6 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 ```
-
-<!-- #region colab_type="text" id="mxnuV0L3AFGo" -->
-Import the data
-<!-- #endregion -->
 
 ```python colab={"base_uri": "https://localhost:8080/", "height": 72} colab_type="code" executionInfo={"elapsed": 5135, "status": "ok", "timestamp": 1590013640924, "user": {"displayName": "Rivkah Gardner-Frolick", "photoUrl": "", "userId": "01660883882147847432"}, "user_tz": 420} id="JBiBubDeAOOX" outputId="7fc5d8fd-d8f6-4fe7-8434-e47f78660658"
 all_O3 = pd.read_csv("data/YVR and Abbotsford 2017.csv",index_col=0, parse_dates=['date_pst'])
@@ -58,9 +51,9 @@ Using _pandas plotting_ to plot the data as a line graph
 <!-- #endregion -->
 
 ```python colab={"base_uri": "https://localhost:8080/", "height": 253} colab_type="code" executionInfo={"elapsed": 805, "status": "ok", "timestamp": 1590015331768, "user": {"displayName": "Rivkah Gardner-Frolick", "photoUrl": "", "userId": "01660883882147847432"}, "user_tz": 420} id="1ZfpMBLCJrjJ" outputId="84610232-9735-4a19-e7f3-2c771363e954"
-stat_name = 'Abbotsford_ppb'
+stat_name = 'YVR_ppb'
 
-ax = all_O3.Abbotsford_ppb.plot(figsize=(9, 3), color='k')
+ax = all_O3.YVR_ppb.plot(figsize=(9, 3), color='k')
 ax.set_ylabel("O$_3$ [ppb]")
 ax.set_xlabel('Date')
 ax.set_title(stat_name)

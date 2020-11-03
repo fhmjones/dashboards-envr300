@@ -94,7 +94,7 @@ container1 = widgets.VBox(children=[draw_s, draw_r, draw_t, draw_m])
 ```python
 # The smoothing function
 # Discussion on options for moving avg. are at: 
-#  https://stackoverflow.com/questions/14313510/how-to-calculate-moving-average-using-numpy
+# https://stackoverflow.com/questions/14313510/how-to-calculate-moving-average-using-numpy
 # "convolve" is quick and avoids going to pandas dataframes. However, using Pandas is probably better. 
 
 def moving_avg(x, w):

@@ -92,6 +92,7 @@ trace1 = go.Scatter(x=xpoints, y=sumpoints, mode="lines")
 # Now build the figure and define non-default parameters for this figure
 g = go.FigureWidget(data=[trace1], 
                     layout=go.Layout(title=dict(text='Sinewave + trend + noise')))
+
 g.layout.width = 700
 g.layout.height = 450
 g.layout.xaxis.title = 'x axis'
