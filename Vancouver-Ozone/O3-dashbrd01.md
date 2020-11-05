@@ -4,7 +4,7 @@
 
 
 ```python
-# intro to figurewidgets at https://plotly.com/python/figurewidget/import numpy as np
+# intro to figurewidgets at https://plotly.com/python/figurewidget/
 
 import pandas as pd
 # matplotlib needed only for checking data early during design
@@ -167,7 +167,7 @@ def update(YVR_raw, Abb_raw, YVR_smooth, Abb_smooth, YVR_mda8, Abb_mda8):
         g.add_scatter(x=all_O3.index, y=all_O3.Abb_smoothed, mode="lines", 
                       line=dict(color='red'), name="Abb smooth")
         g.layout.title = "Abb"
-    if YVR_mda8:
+    if YVR_mda8:  # different "x" because mda8 has daily values, not hourly values. 
         g.add_scatter(x=YVR_max8hrsavg.index, y=YVR_max8hrsavg, mode="lines", 
                       line=dict(color='blue', width=2), name="YVR mda8")
         g.layout.title = "YVR"
