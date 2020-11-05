@@ -54,7 +54,8 @@ YVR_max8hrsavg=yvr_8hr_O3.resample('D').max()
 Abb_max8hrsavg=abb_8hr_O3.resample('D').max()
 
 # tried to add this as columns to the dataframe
-# BUT DOESN'T WORK BECAUSE THERE IS ONLY ONE POINT PER DAY, NOT 24. 
+# BUT DOESN'T WORK BECAUSE THERE IS ONLY ONE POINT PER DAY, NOT 24.
+# Nevertheless, plotting this daily data over the hourly data seems to work just fine.
 # all_O3['YVR_max8hrsavg']=YVR_max8hrsavg
 # all_O3['Abb_max8hrsavg']=Abb_max8hrsavg
 

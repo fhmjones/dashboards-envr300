@@ -7,6 +7,7 @@ This is also where we are learning to build dashboards using ipywidgets with a p
 * We started in the folder "**MonaLoaCO2**" with file "trial04" (trial "05" is same but "cleaner") using `bqplot` for plotting.
 * Then we backed off a bit and used `matplotlib` for the more complete "MonaLoaCO2" dashboard in file "co2-ver01".
 * Then we started work in the "**ThreeSignals**" folder using the `plotly` library. The first two versions, "plotytest01" and "plotlytest02" are commented, and the third version "plotlytest03" is cleaned up for demonstration as a Voila Dashboard.
+* The "**Vancouver-Ozone**" app was started without dashboards to gain more familiarity with using dataframes. This required adapting large datasets so they are small enough to load quickly. Then a dashboard version was built, first exploring use of the `@interact` decorator approach, then using the same method as the "**ThreeSignals**" app.
 * Pointers to libraries used are given in the respective Jupyter Notebooks either as markdown cells or within comments next to code.
 
 For development notes and sources, see comments and documentation in each program's markdown `md` or notebook `ipynb` file.
@@ -25,7 +26,7 @@ Based on the MonaLoa carbon dioxide data since 1958, this dashboard has three pa
 
 **Current status**: this all works, but could be made "prettier". Commentary in the Voila dashboard may be too long. Conversion to use of plotly library will likely be worth while so that dashboards all use the same plotting environment. This will ensure ease of maintenance, and consistent look and feel for users.
 
-## threesignals
+## ThreeSignals
 
 **Goals**: Demonstrate to students how various components can contribute to a complete timeseries signal. Currently, the procedure involves a sine wave, linear trend, random noise and smoothing of the result using a 5-pt moving average. Each can be enabled or disabled. Length of the sinewave can be adjusted from 1 to 10 cycles, and noise level can be adjusted.
 
@@ -40,8 +41,7 @@ Dashboard version is in file "O3_dashbrd01".  Goals are:
 * Compare raw, 7-day moving average and daily maximum 8-hr average. Which makes differences - or the thing you want to learn from the data - most clearly visible? 
 * Explore impact of plotting options on interpreability (eg. dots, lines, both, maybe others) (Not yet done.)
 
-**Current status**: plotting with `plotly` library, using "decorator" approach to adding interactive widgets. 
-**Needs doing**: change to call-back rather than decorator approach so the dashboard component organization can be more flexible.
+**Current status**: Version 01 involved plotting with `plotly` library using "decorator" approach to adding interactive widgets. It is more fully commented with development notes. Version 02 uses the same callback approach as "**ThreeSignals**" and has only the necessary comments. Additional surrounding documentation was added to make it useful as a learning or teaching application. Attribution for the idea and source of the data are also included.
 
 ```python
 
