@@ -1,6 +1,6 @@
-# Dashboards, initially for envr300
+# Dashboards, initially for ENVR 300
 
-This repo is accumulating code, data and strategies for interactive exploration of concepts and data sets in envr300 [Introduction to Research in Environmental Science](https://www.eoas.ubc.ca/academics/courses/envr300).
+This repo is accumulating code, data and strategies for interactive exploration of concepts and data sets in [ENVR 300, Introduction to Research in Environmental Science](https://www.eoas.ubc.ca/academics/courses/envr300).
 
 This is also where we are learning to build dashboards using ipywidgets with a plotting library of your choice. Here is the sequence of development:
 
@@ -34,14 +34,16 @@ Based on the MonaLoa carbon dioxide data since 1958, this dashboard has three pa
 
 ## Vancouver-Ozone
 
-Dashboard version is in file "O3_dashbrd01".  Goals are:
+Goals are to ...
 
 * Have students work with "messy" data sets using ozone from two sensors in SW British Columbia.
 * Compare ozone measurements at two locations, one near the ocean, and one inland.
 * Compare raw, 7-day moving average and daily maximum 8-hr average. Which makes differences - or the thing you want to learn from the data - most clearly visible? 
 * Explore impact of plotting options on interpreability (eg. dots, lines, both, maybe others) (Not yet done.)
 
-**Current status**: Version 01 involved plotting with `plotly` library using "decorator" approach to adding interactive widgets. It is more fully commented with development notes. Version 02 uses the same callback approach as "**ThreeSignals**" and has only the necessary comments. Additional surrounding documentation was added to make it useful as a learning or teaching application. Attribution for the idea and source of the data are also included.
+**Current status**: Version 01 (file O3-dashbrd01.md) involved plotting with `plotly` library using "decorator" approach to adding interactive widgets. It is more fully commented with development notes. Version 02 (file O3-dashbrd02.md) uses the same callback approach as "**ThreeSignals**" and has only the necessary comments. Additional surrounding documentation was added to make it useful as a learning or teaching application. Attribution for the idea and source of the data are also included. 
+
+Next step may be to add some options to vary plotting options such as dots vs lines, etc. 
 
 ```python
 

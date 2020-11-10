@@ -160,6 +160,9 @@ def response(change):
         g.layout.title = "Vancouver Airport and Abbotsford"
 
 # interacting with a widget causes the `observe` method to call back to the `response` function to update the plot
+# "observe" is explained https://ipywidgets.readthedocs.io/en/latest/examples/Using%20Interact.html#Arguments-that-are-dependent-on-each-other
+# it is probably not the most straight forward approach, although it seems to work. 
+# Next steps (below) should be to clean this up. 
 YVR_raw.observe(response, names="value")
 Abb_raw.observe(response, names="value")
 YVR_smooth.observe(response, names="value")
@@ -172,6 +175,13 @@ Abb_mda8.observe(response, names="value")
 # organize the dashboard widgets and plot
 
 widgets.VBox([container3, g])
+```
+
+```python
+# NEXT: pursue more informed use of widgets using "interact" widget functionality more carefully. 
+# See https://ipywidgets.readthedocs.io/en/latest/examples/Using%20Interact.html, including ...
+# use of "observe" to handle arguments that are dependent on each other.
+# There are also guidelines for using "display" and "interactive_output" to manage layout. 
 ```
 
 ## Usage for teaching and learning
@@ -190,5 +200,5 @@ Here are just a few examples of questions that could be posed in class, on your 
 
 ## Attribution
 * Data used here are hourly ozone (parts per billion) for 2017 only, from 2 of many monitoring stations. Full datasets can be found at the BC Data Catalogue, [Air Quality Monitoring: Verified Hourly Data](https://catalogue.data.gov.bc.ca/dataset/77eeadf4-0c19-48bf-a47a-fa9eef01f409), licensed under the [Open Government Licence – British Columbia](https://www2.gov.bc.ca/gov/content/data/open-data/open-government-licence-bc). For more information about these data and their source, see the [Status of Ground-Level Ozone in B.C. (2015-2017)](http://www.env.gov.bc.ca/soe/indicators/air/ozone.html) web page.
-* The idea is derived from a discussion between Tara Ivanochko and Rivkah Gardner-Frolick <rivkahgf@gmail.com> who uses the complete dataset as part of a [Python tutorial](https://colab.research.google.com/drive/1DO0ICvInsr74vnl3AcPBoGtJyNrV-J8F?usp=sharing#scrollTo=a5l7UD_njHPv) on [importing modules, importing data, plotting timeseries and scatter plots].
+* The idea is derived from a discussion between Tara Ivanochko and Rivkah Gardner-Frolick <rivkahgf@gmail.com> who uses the complete dataset as part of a [Python tutorial](https://colab.research.google.com/drive/1DO0ICvInsr74vnl3AcPBoGtJyNrV-J8F?usp=sharing#scrollTo=a5l7UD_njHPv) on importing modules, importing data, plotting timeseries and scatter plots.
 * Code by [Francis Jones](https://www.eoas.ubc.ca/people/francisjones).
