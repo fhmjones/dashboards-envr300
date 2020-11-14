@@ -2,15 +2,15 @@
 
 This repo is accumulating code, data and strategies for interactive exploration of concepts and data sets in [ENVR 300, Introduction to Research in Environmental Science](https://www.eoas.ubc.ca/academics/courses/envr300).
 
-This is also where we are learning to build dashboards using ipywidgets with a plotting library of your choice. Here is the sequence of development:
+## Current files for each of three dashboards:
 
-* We started in the folder "**MonaLoaCO2**" with file "trial04" (trial "05" is same but "cleaner") using `bqplot` for plotting.
-* Then we backed off a bit and used `matplotlib` for the more complete "MonaLoaCO2" dashboard in file "co2-ver01".
-* Then we started work in the "**ThreeSignals**" folder using the `plotly` library. The first two versions, "plotytest01" and "plotlytest02" are commented, and the third version "plotlytest03" is cleaned up for demonstration as a Voila Dashboard.
-* The "**Vancouver-Ozone**" app was started without dashboards to gain more familiarity with using dataframes. This required adapting large datasets so they are small enough to load quickly. Then a dashboard version was built, first exploring use of the `@interact` decorator approach, then using the same method as the "**ThreeSignals**" app.
-* Pointers to libraries used are given in the respective Jupyter Notebooks either as markdown cells or within comments next to code.
+As of November 12, 2020, all three have run successfully in a local instance of Voila, but not yet online in a Jupyterhub. Other files are versions with notes and comments about how we are learning to build dashboard apps. The following three main files include documentation to demonstrate how the dashboard app could be used as a learning or teaching tool.
 
-For development notes and sources, see comments and documentation in each program's markdown `md` or notebook `ipynb` file.
+1. MonaLoaCO2: `co2-ver01.md` contains the dashboard code. Also required: `./data/monthly_in_situ_co2_mlo.csv`.
+2. ThreeSignals: only `plotlytest03.md`. 
+3. Vancouver-Ozone: `O3-dashbrd02.md`. Also required: `./data/YVR and Abbotsford 2017.csv`.
+
+Further details about each of the three dashboard apps follow.
 
 ## MonaLoaCO2
 
@@ -44,6 +44,17 @@ Goals are to ...
 **Current status**: Version 01 (file O3-dashbrd01.md) involved plotting with `plotly` library using "decorator" approach to adding interactive widgets. It is more fully commented with development notes. Version 02 (file O3-dashbrd02.md) uses the same callback approach as "**ThreeSignals**" and has only the necessary comments. Additional surrounding documentation was added to make it useful as a learning or teaching application. Attribution for the idea and source of the data are also included. 
 
 Next step may be to add some options to vary plotting options such as dots vs lines, etc. 
+
+## Development notes
+We are also learning to build dashboards using ipywidgets with different plotting libraries. Here is the sequence of development:
+
+* We started in the folder "**MonaLoaCO2**" with file "trial04" (trial "05" is same but "cleaner") using `bqplot` for plotting.
+* Then we backed off a bit and used `matplotlib` for the more complete "MonaLoaCO2" dashboard in file "co2-ver01".
+* Then we started work in the "**ThreeSignals**" folder using the `plotly` library. The first two versions, "plotytest01" and "plotlytest02" are commented, and the third version "plotlytest03" is cleaned up for demonstration as a Voila Dashboard.
+* The "**Vancouver-Ozone**" app was started without dashboards to gain more familiarity with using dataframes. This required adapting large datasets so they are small enough to load quickly. Then a dashboard version was built, first exploring use of the `@interact` decorator approach, then using the same method as the "**ThreeSignals**" app.
+* Pointers to libraries used are given in the respective Jupyter Notebooks either as markdown cells or within comments next to code.
+
+For development notes and sources, see comments and documentation in each program's markdown `md` or notebook `ipynb` file.
 
 ```python
 
