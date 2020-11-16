@@ -5,19 +5,11 @@ This repo is accumulating code, data and strategies for interactive exploration 
 ## Current files for each of three dashboards:
 
 As of November 12, 2020, all three have run successfully in a local instance of Voila, but not yet online in a Jupyterhub. Other files are versions with notes and comments about how we are learning to build dashboard apps. The following three main files include documentation to demonstrate how the dashboard app could be used as a learning or teaching tool.
-<<<<<<< HEAD
 
 1. MonaLoaCO2: `co2-ver01.md` contains the dashboard code. Also required: `./data/monthly_in_situ_co2_mlo.csv`.
 2. ThreeSignals: only `plotlytest03.md`. 
 3. Vancouver-Ozone: `O3-dashbrd02.md`. Also required: `./data/YVR and Abbotsford 2017.csv`.
 
-=======
-
-1. MonaLoaCO2: `co2-ver01.md` contains the dashboard code. Also required: `./data/monthly_in_situ_co2_mlo.csv`.
-2. ThreeSignals: only `plotlytest03.md`. 
-3. Vancouver-Ozone: `O3-dashbrd02.md`. Also required: `./data/YVR and Abbotsford 2017.csv`.
-
->>>>>>> 7232e2d25a48eca4b24d8a7e4766daeeda713fc1
 Further details about each of the three dashboard apps follow.
 
 ## MonaLoaCO2
@@ -61,12 +53,5 @@ We are also learning to build dashboards using ipywidgets with different plottin
 * Then we started work in the "**ThreeSignals**" folder using the `plotly` library. The first two versions, "plotytest01" and "plotlytest02" are commented, and the third version "plotlytest03" is cleaned up for demonstration as a Voila Dashboard.
 * The "**Vancouver-Ozone**" app was started without dashboards to gain more familiarity with using dataframes. This required adapting large datasets so they are small enough to load quickly. Then a dashboard version was built, first exploring use of the `@interact` decorator approach, then using the same method as the "**ThreeSignals**" app.
 * Pointers to libraries used are given in the respective Jupyter Notebooks either as markdown cells or within comments next to code.
-<<<<<<< HEAD
-=======
-
-For development notes and sources, see comments and documentation in each program's markdown `md` or notebook `ipynb` file.
-
-```python
->>>>>>> 7232e2d25a48eca4b24d8a7e4766daeeda713fc1
 
 For development notes and sources, see comments and documentation in each program's markdown `md` or notebook `ipynb` file.
