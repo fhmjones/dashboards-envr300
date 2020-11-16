@@ -121,8 +121,10 @@ trendpoints = 0.4*xpoints + 0.5
 # The trace to display is a sum of the three components. 
 # Turn components on or off by multiplying by the binary values returned by check box widgets: "component.value". 
 # The smoothed result is a separate time series. 
+# However, start with smoothed result = null so the first view has no smoothed timeseries. 
 sumpoints = draw_s.value*ypoints + draw_r.value*randpoints + draw_t.value*trendpoints
-smoothpoints = draw_m.value*moving_avg(sumpoints,5)
+smoothpoints = []
+
 
 # The 'traces' for the figure are defined as scatter plots, of type "lines".
 trace0 = go.Scatter(x=xpoints, y=sumpoints, mode="lines", name="signal")
@@ -152,7 +154,10 @@ def response(change):
     trendpoints = 0.4*xpoints + 0.5
 
     sumpoints = draw_s.value*ypoints + draw_r.value*randpoints + draw_t.value*trendpoints
-    smoothpoints = draw_m.value*moving_avg(sumpoints,5)
+    if draw_m.value:
+        smoothpoints = moving_avg(sumpoints,5)
+    else:
+        smoothpoints = []
 
     # I don't really understand "with", but it seems to work. 
     # This time there are two traces (trace0 and trace1) in the graph, each with x and y values.
