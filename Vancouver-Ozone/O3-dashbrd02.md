@@ -1,10 +1,12 @@
 ## Ozone at YVR and Abbotsford
 
-**Objectives**: Plot two data sets with any combination of raw data, 7-day avg, or maximum daily 8-hr avg. Note that YVR = Vancouver airport, Abb = Abbotsford and MDA8 = maximum daily 8 hour average. 
+**Objectives**: Plot two data sets with any combination of raw data, 7-day avg, or maximum daily 8-hr avg.  
 
-* Select what to display using checkboxes.
-* To zoom, pan, examine datapoint values, etc., use controls in the graph's upper right (visible when your mouse is in the graph).
-* To zoom to a small time-window along the x-axis, click-and-hold in the dataset to start, then drag and release to set the end of the window. Move this window up and down the axis using the "Pan" button, or reset using the "Reset axes" button (i.e. the little **"home"** icon).
+* Select timeseries to display using checkboxes. Dropdown sets trace type for Abb's data only ("markers" type plots slowly). 
+* Zoom, pan, examine datapoint values, etc. using graph controls, upper right when your mouse is over the graph.
+* Zoom the time-window only using 'click-and-hold' then drag horizontally and release. 
+* Move the graphed window by clicking the "Pan" button. Reset using the the little **"home"** icon.
+* YVR = Vancouver airport, Abb = Abbotsford and MDA8 = maximum daily 8 hour average.
 
 ```python
 # More detailed development comments are in the "O3-dashbrd01" version of this app. 
@@ -99,11 +101,17 @@ Abb_mda8 = widgets.Checkbox(
     disabled=False,
     indent=False
 )
+p_type = widgets.Dropdown(
+    options=['lines', 'markers', 'lines+markers'],
+    value='lines',
+    description='Abb\'s trace',
+    disabled=False, 
+)
 
 #containers for orgnaizing the dashboard 
 container1 = widgets.VBox(children=[YVR_raw, YVR_smooth, YVR_mda8])
 container2 = widgets.VBox(children=[Abb_raw, Abb_smooth, Abb_mda8])
-container3 = widgets.HBox(children=[container1, container2])
+container3 = widgets.HBox(children=[container1, container2, p_type])
 ```
 
 ```python
@@ -136,7 +144,7 @@ def response(change):
                       line=dict(color='MediumTurquoise'), name="YVR raw")
         g.layout.title = "Vancouver Airport"
     if Abb_raw.value:
-        g.add_scatter(x=all_O3.index, y=all_O3.Abbotsford_ppb, mode="lines", 
+        g.add_scatter(x=all_O3.index, y=all_O3.Abbotsford_ppb, mode=p_type.value, 
                       line=dict(color='SandyBrown'), name="Abb raw")
         g.layout.title = "Abbotsford"
     if YVR_smooth.value:
@@ -144,15 +152,16 @@ def response(change):
                       line=dict(color='green'), name="YVR 7-day average")
         g.layout.title = "Vancouver Airport"
     if Abb_smooth.value:
-        g.add_scatter(x=all_O3.index, y=all_O3.Abb_smoothed, mode="lines", 
+        g.add_scatter(x=all_O3.index, y=all_O3.Abb_smoothed, mode=p_type.value, 
                       line=dict(color='red'), name="Abb 7-day average")
         g.layout.title = "Abbotsford"
-    if YVR_mda8.value:  # different "x" because mda8 has daily values, not hourly values. 
+# different "x" because mda8 has daily values, not hourly values. 
+    if YVR_mda8.value:  
         g.add_scatter(x=YVR_max8hrsavg.index, y=YVR_max8hrsavg, mode="lines", 
                       line=dict(color='blue', width=2), name="YVR max daily 8hr avg")
         g.layout.title = "Vancouver Airport"
     if Abb_mda8.value:
-        g.add_scatter(x=YVR_max8hrsavg.index, y=Abb_max8hrsavg, mode="lines", 
+        g.add_scatter(x=YVR_max8hrsavg.index, y=Abb_max8hrsavg, mode=p_type.value, 
                       line=dict(color='firebrick', width=2), name="Abb max daily 8hr avg")
         g.layout.title = "Abbotsford"
 
@@ -169,6 +178,7 @@ YVR_smooth.observe(response, names="value")
 Abb_smooth.observe(response, names="value")
 YVR_mda8.observe(response, names="value")
 Abb_mda8.observe(response, names="value")
+p_type.observe(response, names="value")
 ```
 
 ```python
