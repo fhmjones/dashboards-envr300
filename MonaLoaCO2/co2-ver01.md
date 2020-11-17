@@ -13,14 +13,12 @@ jupyter:
     name: python3
 ---
 
+<!-- #region -->
 # Exploring linear models for prediction
 
-This dashboard is derived from [L. Heagy's presentation](https://ubc-dsci.github.io/jupyterdays/sessions/heagy/widgets-and-dashboards.html) at UBC's Jupyter Days 2020, which in turn is adapted from the [Intro-Jupyter tutorial from ICESat-2Hackweek](https://github.com/ICESAT-2HackWeek/intro-jupyter), which has contributions from: [Shane Grigsby (@espg)](https://github.com/espg), [Lindsey Heagy (@lheagy)](https://github.com/lheagy), [Yara Mohajerani (@yaramohajerani)](https://github.com/yaramohajerani), and [Fernando Pérez (@fperez)](https://github.com/fperez). 
 
-
-## Motivating example: CO$_2$ at Mauna Loa
-
-The preamble could be rewritten (based on the original) if this becomes "real". But for now, the point of this notebook is to practice working with dataframes, plots and widgets. 
+**Goals**: Explore potential and limitations of linear models for predicting future climate parameters based on past data. 
+<!-- #endregion -->
 
 ```python
 import matplotlib.pyplot as plt
@@ -93,6 +91,17 @@ def plot_co2_data(data=co2_data, date_range=None, data_type="seasonally adjusted
 
 ### Part 1: Predicting CO$_2$ based on linear fit to the first 5 years of data.
 
+#### 1: Approximate a line to fit the first 5 yrs of data (1958-1963)
+* Make sure "**year_max**" is 1963 (5 yrs after the first measurements).
+* Adjust "**slope**" and "**intercept**" sliders to make the orange line fit the displayed data points as close as you can. 
+
+#### 2: Use this linear model to predict CO$_2$ ppm at any given year
+* Adjust the "**predn_yr**" slider to choose a year for which you want a predicted CO$_2$. Value is given between sliders and graph.
+* Try predicting for the year 2030. 
+* Adjust the graph using slider "**year_max**" so you can see the value predicted by this linear model at the date you chose.
+
+---
+
 ```python
 import ipywidgets as widgets
 ```
@@ -140,16 +149,6 @@ def plot_fit_co2_data(year_max=2020, slope=1, intercept=300, year_min=1958, pred
 # I don't understand "np.r_"
 ```
 
-#### Step 1, approximate a line to fit the first 5 yrs of data (1958-1963)
-* Make sure "**year_max**" is 1963 (5 yrs after the first measurements).
-* Adjust "**slope**" and "**intercept**" sliders to make the orange line fit the displayed data points as close as you can. 
-
-#### Step 2, use this linear model to predict CO$_2$ ppm at any given year
-* Adjust the "**predn_yr**" slider to choose a year for which you want a predicted CO$_2$; note the value given on the line between sliders and graph.
-
-#### Check this makes sense
-* Adjust the graph using slider "**year_max**" so you can see the value predicted by this linear model at the date you chose.
-
 ```python
 # Interactive method to attach parameter sliders to the figure and present all. 
 series = "seasonally adjusted" #fix the choice of data column for now
@@ -189,7 +188,9 @@ w_co2_early
 
 **Question:** If the trend between 2015 and 2020 continues, what would we expect the CO$_2$ concentration to be in January, 2030? 
 
-Use sliders to explore the "recent" end of the data set. 
+Use sliders to explore the "recent" end of the data set.
+
+---
 
 ```python
 # Code nearly identical to previous cells, hence no comments here.
@@ -231,10 +232,12 @@ w_co2_recent
 
 **Question:** _Before looking at the next plot(!) ..._ Why are these estimates so different? 
 
-Now compare the slopes and predicted values on one graph 
+Now compare the slopes and predicted values on one graph: 
 * Click the "Run Interact" button once. 
 * **Do prediction points align with linear models?**
-* If NOT set "predn_yr" sliders for both models above to 2030 and click "Run Interact" again. 
+* If NOT set "**predn_yr**" sliders for both models above to 2030 and click "Run Interact" again. 
+
+---
 
 ```python
 # We want this third figure to be not shown until user asks for it. 
@@ -290,5 +293,9 @@ Within small enough regions, the data follow an approximately linear trend, so a
 2. Where does it start to break down?
 3. How far out would you trust our predictions with data from 2015 - 2020? Would you trust our model to predict CO$_2$ in the year 2050? 
 4. How might you approach building a model to fit all of our data? 
+
+### Attribution
+* derived from [L. Heagy's presentation](https://ubc-dsci.github.io/jupyterdays/sessions/heagy/widgets-and-dashboards.html) at UBC's Jupyter Days 2020, which in turn is adapted from the [Intro-Jupyter tutorial from ICESat-2Hackweek](https://github.com/ICESAT-2HackWeek/intro-jupyter), which has contributions from: [Shane Grigsby (@espg)](https://github.com/espg), [Lindsey Heagy (@lheagy)](https://github.com/lheagy), [Yara Mohajerani (@yaramohajerani)](https://github.com/yaramohajerani), and [Fernando Pérez (@fperez)](https://github.com/fperez). 
+* Adaptation code by F. Jones.
 
 

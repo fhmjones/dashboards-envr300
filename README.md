@@ -24,7 +24,7 @@ Based on the MonaLoa carbon dioxide data since 1958, this dashboard has three pa
 2. Then do the same for the last 5 yrs of data using the _second_ interactive figure.
 3. Finally, plot the whole dataset with both linear models and the prediction year values. 
 
-**Current status**: this all works, but could be made "prettier". Commentary in the Voila dashboard may be too long. Conversion to use of plotly library will likely be worth while so that dashboards all use the same plotting environment. This will ensure ease of maintenance, and consistent look and feel for users.
+**Current status**: this all works, but could be made "prettier". Conversion to use of plotly library may be worth while so that dashboards all use the same plotting environment. This will ensure ease of maintenance, and consistent look and feel for users.
 
 ## ThreeSignals
 
@@ -39,11 +39,9 @@ Goals are to ...
 * Have students work with "messy" data sets using ozone from two sensors in SW British Columbia.
 * Compare ozone measurements at two locations, one near the ocean, and one inland.
 * Compare raw, 7-day moving average and daily maximum 8-hr average. Which makes differences - or the thing you want to learn from the data - most clearly visible? 
-* Explore impact of plotting options on interpreability (eg. dots, lines, both, maybe others) (Not yet done.)
+* Explore impact of plotting options on interpretability (eg. dots, lines, both, maybe others).
 
-**Current status**: Version 01 (file O3-dashbrd01.md) involved plotting with `plotly` library using "decorator" approach to adding interactive widgets. It is more fully commented with development notes. Version 02 (file O3-dashbrd02.md) uses the same callback approach as "**ThreeSignals**" and has only the necessary comments. Additional surrounding documentation was added to make it useful as a learning or teaching application. Attribution for the idea and source of the data are also included. 
-
-Next step may be to add some options to vary plotting options such as dots vs lines, etc. 
+**Current status**: Version 01 (file O3-dashbrd01.md) involved plotting with `plotly` library using "decorator" approach to adding interactive widgets. It is more fully commented with development notes. Version 02 (file O3-dashbrd02.md) uses the same callback approach as "**ThreeSignals**" and has only the necessary comments. Additional surrounding documentation was added to make it emulate a selfcontained learning or teaching application.
 
 ## Development notes
 We are also learning to build dashboards using ipywidgets with different plotting libraries. Here is the sequence of development:
@@ -54,4 +52,4 @@ We are also learning to build dashboards using ipywidgets with different plottin
 * The "**Vancouver-Ozone**" app was started without dashboards to gain more familiarity with using dataframes. This required adapting large datasets so they are small enough to load quickly. Then a dashboard version was built, first exploring use of the `@interact` decorator approach, then using the same method as the "**ThreeSignals**" app.
 * Pointers to libraries used are given in the respective Jupyter Notebooks either as markdown cells or within comments next to code.
 
-For development notes and sources, see comments and documentation in each program's markdown `md` or notebook `ipynb` file.
+For development notes and sources, see comments and documentation in each program.
