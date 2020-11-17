@@ -48,11 +48,18 @@ import ipywidgets as widgets
 # First assign the widgets
 
 ncycles = widgets.FloatSlider(
-    min=1, max=10, step=0.25, value=2.0, description='Num. cycles'
+    min=1, max=10, step=0.25, value=4.0, description='Num. cycles'
+)
+
+samples = widgets.IntSlider(
+    min=4, max=30, step=2, value=20, description='Pts/cycle'
 )
 
 noiselevel = widgets.FloatSlider(
     min=0, max=5, step=0.25, value=1.0, description='Noise'
+)
+smoothwin = widgets.IntSlider(
+    min=1, max=15, step=2, value=5, description='Smoothing window pts'
 )
 
 # signal
@@ -105,14 +112,17 @@ def moving_avg(x, w):
     z = np.roll(y, int(w/2))
     
     # roll wraps end points back to first points, so set these to zero; a cludge, but works for now.
-    z[:2] = 0
+    wrap = int((w)/2)
+    
+    z[:wrap] = 0
     return z
 ```
 
 ```python
 # build the X-axis first, then the three time series: 
 
-xpoints = np.arange(0, ncycles.value, 0.05)
+deltat = 1/samples.value
+xpoints = np.arange(0, ncycles.value, deltat)
 N=len(xpoints)         #this may not be the most sophisticated approach 
 ypoints = np.sin(xpoints*2*math.pi)
 randpoints = noiselevel.value * (random.rand(N)-.5)
@@ -122,18 +132,18 @@ trendpoints = 0.4*xpoints + 0.5
 # Turn components on or off by multiplying by the binary values returned by check box widgets: "component.value". 
 # The smoothed result is a separate time series. 
 # However, start with smoothed result = null so the first view has no smoothed timeseries. 
+# Marker styling at https://plotly.com/python/marker-style/
 sumpoints = draw_s.value*ypoints + draw_r.value*randpoints + draw_t.value*trendpoints
 smoothpoints = []
 
-
 # The 'traces' for the figure are defined as scatter plots, of type "lines".
-trace0 = go.Scatter(x=xpoints, y=sumpoints, mode="lines", name="signal")
+trace0 = go.Scatter(x=xpoints, y=sumpoints, mode="markers", marker=dict(size=4), name="sine wave")
 trace1 = go.Scatter(x=xpoints, y=smoothpoints, mode="lines", name="smoothed")
 
 # Now build the figure and define non-default parameters for this figure
 g = go.FigureWidget(data=[trace0, trace1], 
-                    layout=go.Layout(title=dict(text='Sinewave+trend+noise & 5-point moving average')))
-g.layout.width = 700
+                    layout=go.Layout(title=dict(text=(f"Sampled at {samples.value} pts/cycle; smoothed with {smoothwin.value}-point moving avg."))))
+g.layout.width = 800
 g.layout.height = 450
 g.layout.xaxis.title = 'x axis'
 g.layout.yaxis.title = 'Amplitude'
@@ -147,7 +157,8 @@ g.layout.yaxis.range=[-4.,8.]
 #   generate the calls back to the "response" function.
 
 def response(change):   
-    xpoints = np.arange(0, ncycles.value, 0.05)
+    deltat = 1/samples.value
+    xpoints = np.arange(0, ncycles.value, deltat)
     N=len(xpoints)         #this may not be the most sophisticated approach 
     ypoints = np.sin(xpoints*2*math.pi)
     randpoints = noiselevel.value * (random.rand(N)-.5)
@@ -155,7 +166,7 @@ def response(change):
 
     sumpoints = draw_s.value*ypoints + draw_r.value*randpoints + draw_t.value*trendpoints
     if draw_m.value:
-        smoothpoints = moving_avg(sumpoints,5)
+        smoothpoints = moving_avg(sumpoints,smoothwin.value)
     else:
         smoothpoints = []
 
@@ -166,6 +177,7 @@ def response(change):
         g.data[0].y = sumpoints
         g.data[1].x = xpoints
         g.data[1].y = smoothpoints
+        g.layout.title = (f"Sampled at {samples.value} pts/cycle; smoothed with {smoothwin.value}-point moving avg.")
 
 # The next few calls I don't really understand. 
 # Presumably I have to look up what the "observe" method is for "widget" objects. 
@@ -175,6 +187,8 @@ def response(change):
         
 ncycles.observe(response, names="value")
 noiselevel.observe(response, names="value")
+smoothwin.observe(response, names="value")
+samples.observe(response, names="value")
 draw_s.observe(response, names="value")
 draw_m.observe(response, names="value")
 draw_r.observe(response, names="value")
@@ -183,7 +197,7 @@ draw_t.observe(response, names="value")
 
 ```python
 # Finish building the layout, this time an Hbox for two sliders and sliders next to checkboxes
-container2 = widgets.VBox([ncycles, noiselevel])
+container2 = widgets.VBox([ncycles, samples, noiselevel, smoothwin])
 container3 = widgets.HBox([container1, container2])
 
 # Finally, run the dashboard. 
