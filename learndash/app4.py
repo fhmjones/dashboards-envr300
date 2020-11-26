@@ -22,38 +22,58 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div([
     dcc.Markdown('''
-### Noisy sine wave on a linear trend
+        ### Noisy sine wave on a linear trend
 
-#### Purpose
+        #### Purpose
 
-Demonstrate a synthetic signal consisting of _data + random noise + a linear trend_. Also show effect of smoothing the noisy signal. Signal is sine wave with adjustable samples/cycle and smoothing is an adjustable N-pt moving avg. (i.e. a N-pt boxcar convolution). Sine wave is plotted as points while smoothed is plotted as lines.
+        Demonstrate a synthetic signal consisting of _data + random noise + a linear trend_. 
+        Also show effect of smoothing the noisy signal. 
+        Signal is sine wave with adjustable samples/cycle and smoothing is an adjustable N-pt moving avg. (i.e. a N-pt boxcar convolution). 
+        Sine wave is plotted as points while smoothed is plotted as lines.
 
-#### Instructions
+        #### Instructions
 
-Explore the dashboard and its controls. Note that figure-viewing controls in the figure's top-right corner only appear when your mouse is within the figure. 
+        Explore the dashboard and its controls. 
+        Note that figure-viewing controls in the figure's top-right corner only appear when your mouse is within the figure. 
+        As examples, click 'Autoscale' if graphs are off scale, or use "Reset axes to return to original scales.
+        Zoom within the graph using click and drag. Try it out! 
 
-----------
-'''),
+        ----------
+        '''),
 
-# slider details at https://dash.plotly.com/dash-core-components/slider 
+# slider or checklist details at https://dash.plotly.com/dash-core-components
+# checkbox can be lumped together but then logic in "update_graph" is messier.
+# Content can be delivered using html, but markdown is simpler. 
     html.Div([
         dcc.Markdown('''
         **Select signal components**
         '''),
         dcc.Checklist(
-            id='Sigs',
+            id='sine_checkbox',
             options=[
-                {'label': 'SineWave', 'value': 'sine'},
+                {'label': 'SineWave', 'value': 'sine'}
+            ],
+            value=['sine']
+        ),
+        dcc.Checklist(
+            id='noise_checkbox',
+            options=[
                 {'label': 'Noise', 'value': 'noise'},
+            ],
+            value=['noise']
+        ),
+        dcc.Checklist(
+            id='trend_checkbox',
+            options=[
                 {'label': 'Trend', 'value': 'trend'},                
             ],
-            value=['sine', 'noise']
+            value=[]
         ),
         dcc.Markdown('''
         **Check to show smoothed**
         '''),
         dcc.Checklist(
-            id='Smooth_on',
+            id='smooth_checkbox',
             options=[
                 {'label': 'Smoothed', 'value': 'smooth'}
             ],
@@ -112,15 +132,18 @@ def moving_avg(x, w):
     z[:wrap] = 0
     return z
 
+# The callback function with it's app.callback wrapper.
 @app.callback(
     Output('indicator-graphic', 'figure'),
     Input('ncycles', 'value'),
     Input('noiselevel', 'value'),
     Input('smoothwin', 'value'),
-    Input('Sigs', 'value'),
-    Input('Smooth_on', 'value')  
+    Input('sine_checkbox', 'value'),
+    Input('noise_checkbox', 'value'),
+    Input('trend_checkbox', 'value'),
+    Input('smooth_checkbox', 'value')  
     )    
-def update_graph(ncycles, noiselevel, smoothwin, Sigs, Smooth_on):
+def update_graph(ncycles, noiselevel, smoothwin, sine_checkbox, noise_checkbox, trend_checkbox, smooth_checkbox,):
     # make a noisy sine wave on a linear trend
     # build the X-axis first, then the three time series: 
     xpoints = np.arange(0, ncycles, 0.05)
@@ -129,26 +152,20 @@ def update_graph(ncycles, noiselevel, smoothwin, Sigs, Smooth_on):
     randpoints = noiselevel * (random.rand(N)-.5)
     trendpoints = 0.4*xpoints + 0.5
 
-    if Sigs == ['sine']:
-         sumpoints = ypoints
-    elif Sigs == ['noise']:
-        sumpoints = randpoints
-    elif Sigs == ['trend']:
-        sumpoints = trendpoints
-    elif Sigs == ['sine', 'noise']:
-         sumpoints = ypoints + randpoints
-    elif Sigs == ['sine', 'trend']:
-         sumpoints = ypoints + trendpoints
-    elif Sigs == ['trend', 'noise']:
-         sumpoints = trendpoints + randpoints
-    else:
-        sumpoints = ypoints + randpoints + trendpoints
+    a1 = a2 = a3 = 0
+    if sine_checkbox == ['sine']: a1 = 1
+    if noise_checkbox == ['noise']: a2 = 1
+    if trend_checkbox == ['trend']: a3 = 1
+    
+    if a1 or a2 or a3: sumpoints = a1*ypoints + a2*randpoints + a3*trendpoints
+    else: sumpoints = []
 
-    if Smooth_on == ['smooth']:
+    if smooth_checkbox == ['smooth']:
         smoothpoints = moving_avg(sumpoints,smoothwin)
     else:
         smoothpoints = []
-
+        
+# constructing the figure more directly than using plotly.express
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=xpoints, y=sumpoints,
                     mode='lines',
@@ -161,6 +178,7 @@ def update_graph(ncycles, noiselevel, smoothwin, Sigs, Smooth_on):
     fig.update_xaxes(range=[0, 10])
     fig.update_yaxes(range=[-2, 7])
 
+# The plotly express approach: Not sure how to add to lines without using dataframes, but direct approach above works fine.
 #    fig = px.line(x=xpoints, y=sumpoints, labels={'x':'t', 'y':'sin(t)'}, range_x=(0,10), range_y=(-2,7))
 
     return fig
