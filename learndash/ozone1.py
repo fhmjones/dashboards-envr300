@@ -12,7 +12,8 @@ import pandas as pd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly.express as px
+# plotly express could be used for simple applications
+# but this app needs to build plotly graph components separately 
 import plotly.graph_objects as go
 from dash.dependencies import Input, Output
 
@@ -43,16 +44,16 @@ abb_8hr_O3 = all_O3.Abbotsford_ppb.rolling(8,min_periods=6).mean()
 YVR_max8hrsavg=yvr_8hr_O3.resample('D').max()
 Abb_max8hrsavg=abb_8hr_O3.resample('D').max()
 
-# tried to add these as columns to the dataframe BUT ...
-# THAT ISN'T EASY BECAUSE THERE IS ONLY ONE POINT PER DAY, NOT 24.
-# But they still plot with other traces so long as the correct x-axis is used later in "g.add_scatter"
-
-# Define the dashboard controls or "widget objects"
+# Dash starts by defining dashboard controls at the same time as 
+# placing them on the page using layout functions.
+# HTML can be used, but it's easier to just have Dash translate MarkDown.
+# For more control over layout, HTML and a chosen CSS template will be needed.
 # YVR = Vancouver airport
 # Abb = Abbotsford
 # MDA8 = maximum daily 8 hour average
 
 app.layout = html.Div([
+# Start the page with introductory text and instructions.
     dcc.Markdown('''
         ### Ozone at two locations for all of 2017
 
@@ -71,6 +72,13 @@ app.layout = html.Div([
         ----------
         '''),
     html.Div([
+# CheckList can define all checkboxes together but then the logic becomes 
+# more awkward for this simple task. So each box is a separate CheckBox of this situation.
+
+# Layout intention is to have 3 columns, 2 with checkboxes and a third with the dropdown.
+# result is not ideal (dropdown is too low).
+# The solution involves manipulating CSS but it is probably better to use BootStrap classes.
+# That can be pursued later as it is "cosmetics" not functionality.
         dcc.Markdown('''
         **Select YVR components**
         '''),
@@ -137,8 +145,10 @@ app.layout = html.Div([
         ),
     ], style={'width': '30%', 'display': 'inline-block'}),
 
+# after controls, place the figure
     dcc.Graph(id='indicator-graphic'),
 
+# then the text for instruction or to define the assignment.
     dcc.Markdown('''
         ## Usage for teaching and learning
 
@@ -175,7 +185,7 @@ app.layout = html.Div([
     Input('linetype', 'value'),
     )
 def update_graph(yvrr_chkbox, yvrs_chkbox, yvrm_chkbox, abbr_chkbox, abbs_chkbox, abbm_chkbox, linetype):
-# constructing the figure more directly than using plotly.express
+# constructing all the figure's components
     fig = go.Figure()
     if yvrr_chkbox == ['yvrr']:
         fig.add_trace(go.Scatter(x=all_O3.index, y=all_O3.YVR_ppb,
@@ -209,5 +219,12 @@ def update_graph(yvrr_chkbox, yvrs_chkbox, yvrm_chkbox, abbr_chkbox, abbs_chkbox
 
     return fig    
 
+# dubugging on causes the active page to refresh as soon as edits are saved. 
+# Python will quite if there are syntax errors, but if not the app will 
+# throw error messages directly into the running browser window. 
+# This is a very efficient workflow.
 if __name__ == '__main__':
     app.run_server(debug=True)
+
+# I'm not sure if it's more efficient to turn off debug; needs researching. 
+    #app.run_server(debug=False)
