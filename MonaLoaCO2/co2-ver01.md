@@ -205,7 +205,7 @@ w_co2_recent = widgets.interactive(
         min=0, max=5, step=0.1, value=2
     ),
     intercept=widgets.FloatSlider(
-        min=round(co2_data["seasonally adjusted"].max(),0)-20, 
+        min=round(co2_data["seasonally adjusted"].max(),0)-30, 
         max=co2_data["seasonally adjusted"].max(), 
         step=0.25
     ),
